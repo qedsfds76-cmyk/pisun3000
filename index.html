@@ -2,216 +2,516 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>Марианская впадина</title>
+<title>Марианская впадина • Глубина, которая не отпускает</title>
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Arial, sans-serif; }
+  * { margin:0; padding:0; box-sizing:border-box;
+      font-family:'Segoe UI', 'Inter', Arial, sans-serif; }
   body { background:#000; color:#e0f7ff; overflow:hidden; }
 
   .slide {
-    display:none; width:100vw; height:100vh; padding:55px 85px;
-    flex-direction:row; align-items:center; gap:55px;
+    display:none;
+    width:100vw; height:100vh;
+    padding:55px 80px;
+    flex-direction:row;
+    align-items:center;
+    gap:60px;
     position:relative;
     background: linear-gradient(180deg,
-      #003049 0%, #001d3d 25%, #00112b 55%, #000814 80%, #000000 100%);
+      #003049 0%, #001d3d 22%, #00112b 50%, #000814 78%, #000000 100%);
   }
   .slide.active { display:flex; }
 
-  .text { flex:1; z-index:2; }
-  h1 { font-size:72px; color:#ffd60a; margin-bottom:20px; letter-spacing:2px; line-height:1.1; }
-  h2 { font-size:48px; color:#00b4d8; margin-bottom:28px; letter-spacing:1px; }
-  p { font-size:25px; line-height:1.6; margin-bottom:14px; }
-  ul { padding-left:0; list-style:none; }
-  li { font-size:26px; line-height:1.7; margin-bottom:13px;
-        padding-left:36px; position:relative; }
-  li::before { content:"▸"; color:#00b4d8; font-weight:bold;
-                position:absolute; left:0; font-size:27px; }
-  .accent { color:#ffd60a; font-weight:600; }
-  .scary  { color:#ff4d6d; font-weight:600; }
-  .big-number { font-size:100px; color:#ffd60a; font-weight:800;
-                letter-spacing:3px; margin:20px 0; }
-  .line { width:120px; height:4px;
-          background:linear-gradient(90deg,#ffd60a,#ff4d6d);
-          margin-bottom:26px; border-radius:2px; }
+  .depth-scale {
+    position:absolute;
+    left:30px; top:50%;
+    transform:translateY(-50%);
+    width:2px; height:70vh;
+    background:linear-gradient(180deg, #00b4d8, #003049, #000);
+    border-radius:2px;
+    z-index:1;
+  }
+  .depth-scale::before,
+  .depth-scale::after {
+    content:"";
+    position:absolute;
+    left:-4px;
+    width:10px; height:2px;
+    background:#00b4d8;
+  }
+  .depth-scale::before { top:0; }
+  .depth-scale::after  { bottom:0; }
 
-  .img-box { flex: 0 0 40%; display:flex; align-items:center; justify-content:center; }
-  .img-box img {
-    max-width:100%; max-height:70vh;
-    border-radius:14px;
-    box-shadow: 0 0 40px rgba(0,180,216,0.5), 0 0 80px rgba(0,0,0,0.9);
-    border:1px solid rgba(0,180,216,0.35);
-    object-fit:cover;
+  .text { flex:1; z-index:2; padding-left:20px; }
+
+  h1 {
+    font-size:76px;
+    color:#ffd60a;
+    margin-bottom:22px;
+    letter-spacing:2px;
+    line-height:1.05;
+    font-weight:800;
+  }
+  h1 span { color:#00b4d8; display:block; font-size:28px;
+            letter-spacing:8px; font-weight:400; margin-bottom:10px; }
+
+  h2 {
+    font-size:46px;
+    color:#00b4d8;
+    margin-bottom:30px;
+    letter-spacing:0.5px;
+    font-weight:700;
+    position:relative;
+    padding-bottom:16px;
+  }
+  h2::after {
+    content:"";
+    position:absolute;
+    bottom:0; left:0;
+    width:90px; height:3px;
+    background:linear-gradient(90deg,#ffd60a,#ff4d6d);
+    border-radius:2px;
   }
 
-  .num { position:absolute; bottom:28px; right:50px;
-         font-size:20px; color:#4a6b82; letter-spacing:2px; }
+  p { font-size:24px; line-height:1.65; margin-bottom:14px; color:#cfeeff; }
 
-  .nav { position:fixed; bottom:22px; left:50%; transform:translateX(-50%);
-         display:flex; gap:20px; z-index:100; }
-  .nav button { background:#0077b6; color:#fff; border:none;
-                padding:13px 34px; font-size:18px; border-radius:8px;
-                cursor:pointer; font-weight:600; letter-spacing:1px; }
-  .nav button:hover { background:#00b4d8; }
+  ul { padding-left:0; list-style:none; margin-top:4px; }
+  li {
+    font-size:24px;
+    line-height:1.7;
+    margin-bottom:14px;
+    padding-left:38px;
+    position:relative;
+    color:#d6efff;
+  }
+  li::before {
+    content:"▸";
+    color:#00b4d8;
+    font-weight:bold;
+    position:absolute;
+    left:0; top:-1px;
+    font-size:26px;
+  }
+
+  .accent { color:#ffd60a; font-weight:600; }
+  .scary  { color:#ff4d6d; font-weight:600; }
+
+  .big-number {
+    font-size:110px;
+    color:#ffd60a;
+    font-weight:800;
+    letter-spacing:2px;
+    margin:18px 0 6px;
+    line-height:1;
+    text-shadow:0 0 40px rgba(255,214,10,0.35);
+  }
+  .big-number-sub {
+    font-size:18px;
+    color:#6b8fa8;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    margin-bottom:26px;
+  }
+
+  .fact {
+    margin-top:26px;
+    padding:20px 24px;
+    border-left:3px solid #ffd60a;
+    background:rgba(255,214,10,0.06);
+    border-radius:0 8px 8px 0;
+    font-size:21px;
+    line-height:1.6;
+    color:#e0f7ff;
+  }
+  .fact strong { color:#ffd60a; }
+
+  .fact.scary-fact {
+    border-left-color:#ff4d6d;
+    background:rgba(255,77,109,0.08);
+  }
+  .fact.scary-fact strong { color:#ff4d6d; }
+
+  .img-box {
+    flex:0 0 38%;
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+  }
+  .img-box img {
+    max-width:100%;
+    max-height:68vh;
+    border-radius:14px;
+    box-shadow:
+      0 0 0 1px rgba(0,180,216,0.35),
+      0 25px 70px rgba(0,0,0,0.9),
+      0 0 80px rgba(0,180,216,0.15);
+    object-fit:cover;
+    display:block;
+  }
+
+  .img-caption {
+    position:absolute;
+    bottom:-28px; right:0;
+    font-size:14px;
+    color:#5a7c93;
+    letter-spacing:1px;
+  }
+
+  .num {
+    position:absolute;
+    bottom:30px; right:50px;
+    font-size:18px;
+    color:#4a6b82;
+    letter-spacing:3px;
+    font-weight:600;
+  }
+
+  /* ===== ПОДПИСЬ "АЛЬТА ПЕТУХАН" — ЯРКАЯ, КАК ВОДЯНОЙ ЗНАК ===== */
+  .signature {
+    position:fixed;
+    top:22px;
+    right:30px;
+    font-size:22px;
+    color:#ffd60a;
+    letter-spacing:5px;
+    text-transform:uppercase;
+    font-weight:800;
+    z-index:200;
+    padding:10px 22px;
+    border:2px solid #ffd60a;
+    border-radius:10px;
+    background:rgba(0,0,0,0.45);
+    box-shadow:0 0 25px rgba(255,214,10,0.55),
+               0 0 50px rgba(255,77,109,0.35);
+    text-shadow:0 0 12px rgba(255,214,10,0.9);
+    user-select:none;
+    backdrop-filter:blur(6px);
+  }
+
+  .nav {
+    position:fixed;
+    bottom:22px; left:50%;
+    transform:translateX(-50%);
+    display:flex; gap:16px;
+    z-index:100;
+  }
+  .nav button {
+    background:rgba(0,119,182,0.85);
+    color:#fff;
+    border:1px solid rgba(0,180,216,0.4);
+    padding:13px 34px;
+    font-size:17px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+    letter-spacing:1px;
+    transition:0.25s;
+    backdrop-filter:blur(10px);
+  }
+  .nav button:hover {
+    background:#00b4d8;
+    box-shadow:0 0 25px rgba(0,180,216,0.6);
+    transform:translateY(-2px);
+  }
+
+  .slide.title-slide {
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:60px 100px;
+  }
+  .slide.title-slide .depth-scale { display:none; }
+  .slide.title-slide h1 { font-size:96px; margin-bottom:16px; }
+  .slide.title-slide p  { font-size:26px; color:#8fc7e8; max-width:800px; }
+  .slide.title-slide .subtitle {
+    font-size:17px; letter-spacing:8px; color:#4a6b82;
+    margin-top:60px; text-transform:uppercase;
+  }
+
+  .slide.final-slide {
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+  }
+  .slide.final-slide h2 { text-align:center; }
+  .slide.final-slide h2::after { left:50%; transform:translateX(-50%); }
+  .slide.final-slide ul { text-align:left; display:inline-block; }
+
+  /* АВТОР НА ФИНАЛЬНОМ СЛАЙДЕ — ЗАМЕТНЕЕ */
+  .author {
+    margin-top:45px;
+    font-size:24px;
+    color:#8fc7e8;
+    letter-spacing:3px;
+    text-transform:uppercase;
+  }
+  .author strong {
+    color:#ffd60a;
+    font-size:44px;
+    letter-spacing:5px;
+    display:block;
+    margin-top:14px;
+    text-shadow:0 0 30px rgba(255,214,10,0.7),
+                0 0 60px rgba(255,77,109,0.4);
+    font-weight:800;
+  }
+
+  .slide.legend-slide {
+    background: linear-gradient(180deg,
+      #1a0000 0%, #0d0011 30%, #0a0008 60%, #000000 100%);
+  }
+  .slide.legend-slide h2 {
+    color:#ff4d6d;
+    text-shadow:0 0 25px rgba(255,77,109,0.5);
+  }
+  .slide.legend-slide h2::after {
+    background:linear-gradient(90deg,#ff4d6d,#8b0033);
+  }
+  .slide.legend-slide li::before { color:#ff4d6d; }
+  .slide.legend-slide .accent { color:#ff4d6d; }
 </style>
 </head>
 <body>
 
-<!-- СЛАЙД 1 -->
-<div class="slide active">
-  <div class="text">
-    <div class="line"></div>
-    <h1>МАРИАНСКАЯ<br>ВПАДИНА</h1>
-    <p style="font-size:30px; color:#00b4d8;">Что скрывается на глубине 11 км?</p>
-    <p style="margin-top:50px; font-size:20px; color:#4a6b82;">География • 8 класс</p>
-  </div>
-  <div class="img-box"><img src="img/intro.jpg" alt="Марианская впадина"></div>
-  <span class="num">1 / 10</span>
+<!-- ПОДПИСЬ В УГЛУ (теперь яркая) -->
+<div class="signature">Альта петухан</div>
+
+<!-- ==================== СЛАЙД 1 — ТИТУЛ ==================== -->
+<div class="slide title-slide active">
+  <h1><span>ГЕОГРАФИЯ • 8 КЛАСС</span>МАРИАНСКАЯ<br>ВПАДИНА</h1>
+  <p>Что скрывается на глубине почти 11 километров?</p>
+  <div class="subtitle">Исследовательская презентация</div>
+  <span class="num">1 / 11</span>
 </div>
 
-<!-- СЛАЙД 2 -->
+<!-- ==================== СЛАЙД 2 ==================== -->
 <div class="slide">
+  <div class="depth-scale"></div>
   <div class="text">
-    <div class="line"></div>
     <h2>Где она прячется?</h2>
     <ul>
-      <li>Западная часть Тихого океана</li>
+      <li>Западная часть <span class="accent">Тихого океана</span></li>
       <li>Рядом с <span class="accent">Марианскими островами</span></li>
       <li>Длина — более <span class="accent">2 500 км</span></li>
       <li>Ширина — около 69 км</li>
-      <li>Самое глубокое место на Земле</li>
+      <li>Самое глубокое место на планете Земля</li>
     </ul>
+    <div class="fact">
+      <strong>Факт:</strong> если мысленно поставить впадину рядом с Россией,
+      она протянулась бы от Москвы до Иркутска.
+    </div>
   </div>
-  <div class="img-box"><img src="img/map.jpg" alt="Карта впадины"></div>
-  <span class="num">2 / 10</span>
+  <div class="img-box">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMBndLlJ7QX1TR9WbOeZfiiD1WVE1jUINsn4DXQ5qoiQ&s=10" alt="Карта Марианской впадины">
+    <div class="img-caption">Карта впадины</div>
+  </div>
+  <span class="num">2 / 11</span>
 </div>
 
-<!-- СЛАЙД 3 -->
+<!-- ==================== СЛАЙД 3 ==================== -->
 <div class="slide">
+  <div class="depth-scale"></div>
   <div class="text">
-    <div class="line"></div>
     <h2>Бездна Челленджера</h2>
     <p>Самая глубокая точка планеты:</p>
     <div class="big-number">10 994 м</div>
-    <p>Эверест (8 848 м) утонул бы здесь — <span class="scary">над ним осталось бы ещё 2 км воды</span>.</p>
+    <div class="big-number-sub">глубина</div>
+    <div class="fact">
+      <strong>Сравнение:</strong> Эверест (8 848 м) утонул бы здесь полностью —
+      над его вершиной осталось бы ещё <span class="accent">более 2 км воды</span>.
+    </div>
   </div>
-  <div class="img-box"><img src="img/deep.jpg" alt="Глубины"></div>
-  <span class="num">3 / 10</span>
+  <div class="img-box">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTywCx8G-pmfm9du5259je3hOI7VERx-GsMExb8qsXeEQ&s=10" alt="Схема глубин">
+    <div class="img-caption">Сравнение высот</div>
+  </div>
+  <span class="num">3 / 11</span>
 </div>
 
-<!-- СЛАЙД 4 -->
+<!-- ==================== СЛАЙД 4 ==================== -->
 <div class="slide">
+  <div class="depth-scale"></div>
   <div class="text">
-    <div class="line"></div>
     <h2>Как она образовалась?</h2>
     <ul>
       <li>Одна <span class="accent">литосферная плита</span> уходит под другую</li>
-      <li>Это называется <span class="accent">субдукция</span></li>
+      <li>Этот процесс называется <span class="accent">субдукция</span></li>
       <li>Тихоокеанская плита «ныряет» под Марианскую</li>
-      <li>Процесс идёт миллионы лет</li>
-      <li>Поэтому тут — <span class="scary">самые глубокие желоба Земли</span></li>
+      <li>Процесс идёт уже <span class="accent">миллионы лет</span></li>
+      <li>Именно поэтому здесь — самые глубокие желоба Земли</li>
     </ul>
+    <div class="fact">
+      <strong>Масштаб:</strong> скорость погружения плиты — примерно
+      3–5 см в год. Это медленнее, чем растёт ноготь на пальце.
+    </div>
   </div>
-  <div class="img-box"><img src="img/intro.jpg" alt="Субдукция"></div>
-  <span class="num">4 / 10</span>
+  <div class="img-box">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLUjMnPrEilWU_9xkFejwetz3Op0bHxmh6tFasFXXCYQ&s=10" alt="Субдукция плит">
+    <div class="img-caption">Субдукция литосферных плит</div>
+  </div>
+  <span class="num">4 / 11</span>
 </div>
 
-<!-- СЛАЙД 5 -->
+<!-- ==================== СЛАЙД 5 ==================== -->
 <div class="slide">
+  <div class="depth-scale"></div>
   <div class="text">
-    <div class="line"></div>
     <h2>Условия на дне</h2>
     <ul>
       <li>Температура: <span class="accent">+1…+4 °C</span></li>
-      <li><span class="scary">Абсолютная темнота</span> — свет не доходит</li>
-      <li>Давление: <span class="scary">~1100 атмосфер</span></li>
-      <li>Еды почти нет — но жизнь существует</li>
+      <li><span class="scary">Абсолютная темнота</span> — солнечный свет не доходит</li>
+      <li>Давление: <span class="scary">около 1100 атмосфер</span></li>
+      <li>Пищи почти нет — но жизнь всё равно есть</li>
     </ul>
+    <div class="fact">
+      <strong>Вообрази:</strong> на такой глубине давление равно тому,
+      как если бы <em>50 авиалайнеров</em> стояли на одном человеческом теле.
+    </div>
   </div>
-  <div class="img-box"><img src="img/map.jpg" alt="Впадина"></div>
-  <span class="num">5 / 10</span>
+  <div class="img-box">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_ZBGL6Svq2tSNuJLOjYjLcVAhVQeeN7Q1TlnMmXM43Q&s" alt="Глубина океана">
+    <div class="img-caption">Зона вечной тьмы</div>
+  </div>
+  <span class="num">5 / 11</span>
 </div>
 
-<!-- СЛАЙД 6 -->
+<!-- ==================== СЛАЙД 6 ==================== -->
 <div class="slide">
+  <div class="depth-scale"></div>
   <div class="text">
-    <div class="line"></div>
     <h2>Кто живёт в бездне?</h2>
     <ul>
-      <li><span class="scary">Гигантский кальмар</span> — до 13 метров</li>
+      <li><span class="scary">Гигантский кальмар</span> — до 13 метров в длину</li>
       <li>Рыбы-удильщики со светящимися зубами</li>
-      <li>Бактерии-экстремофилы</li>
+      <li>Бактерии-экстремофилы, живущие при 1100 атм</li>
       <li>Слепые черви и ракообразные</li>
-      <li>Существа, которых мы ещё не нашли</li>
+      <li>Существа, которых мы ещё даже не открыли</li>
     </ul>
+    <div class="fact">
+      <strong>Интересно:</strong> каждый новый спуск приносит
+      <span class="accent">1–2 неизвестных науке вида</span>.
+    </div>
   </div>
-  <div class="img-box"><img src="img/angler.jpg" alt="Удильщик"></div>
-  <span class="num">6 / 10</span>
+  <div class="img-box">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6YNLfA6kqOzXXK3U6GWBdT59FymdcLAby1N639IuL_A&s=10" alt="Обитатели глубин">
+    <div class="img-caption">Обитатели бездны</div>
+  </div>
+  <span class="num">6 / 11</span>
 </div>
 
-<!-- СЛАЙД 7 -->
-<div class="slide">
+<!-- ==================== СЛАЙД 7 — ЖУТКИЕ СЛУХИ ==================== -->
+<div class="slide legend-slide">
+  <div class="depth-scale"></div>
   <div class="text">
-    <div class="line"></div>
+    <h2>Слухи и чудовища бездны</h2>
+    <ul>
+      <li><span class="accent">Мегалодон</span> — якобы гигантская акула до 20 м, прячется на дне</li>
+      <li><span class="accent">Кракен</span> — легендарный спрут, топящий корабли щупальцами</li>
+      <li><span class="accent">Морской змей</span> — змееподобное существо, замеченное моряками</li>
+      <li>Странные <span class="accent">звуки</span> — «бип», «стон», «Юлианский вой» — учёные до сих пор не объяснили</li>
+      <li>Легенды о <span class="accent">подводных городах</span> и исчезнувших экспедициях</li>
+    </ul>
+    <div class="fact scary-fact">
+      <strong>Жуткий слух:</strong> в 1997 году гидрофоны NOAA записали
+      звук «Bloop» — мощнее синего кита. До сих пор точно неизвестно, кто это был.
+    </div>
+  </div>
+  <div class="img-box">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXFex7io50o3QZyjq0WRRA3ws_XhFFDWSuPUQM33IwYQ&s=10" alt="Монстры бездны">
+    <div class="img-caption">Легенды глубин</div>
+  </div>
+  <span class="num">7 / 11</span>
+</div>
+
+<!-- ==================== СЛАЙД 8 ==================== -->
+<div class="slide">
+  <div class="depth-scale"></div>
+  <div class="text">
     <h2>Светящиеся существа</h2>
     <ul>
       <li>На глубине многие животные <span class="accent">светятся</span></li>
-      <li>Это называется <span class="accent">биолюминесценция</span></li>
+      <li>Это явление называется <span class="accent">биолюминесценция</span></li>
       <li>Свет помогает <span class="scary">приманивать добычу</span></li>
-      <li>Также — отпугивать врагов и находить пару</li>
+      <li>Также — отпугивать хищников и находить пару</li>
       <li>Удильщик — самый известный «фонарик» океана</li>
     </ul>
+    <div class="fact">
+      <strong>Химия:</strong> свечение создаётся реакцией
+      люциферина с кислородом — без тепла, почти без энергии.
+    </div>
   </div>
-  <div class="img-box"><img src="img/angler.jpg" alt="Биолюминесценция"></div>
-  <span class="num">7 / 10</span>
+  <div class="img-box">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhucrIsJFeAacqTw3UkoEA140_C2-2kzEX2cfcg__2Bw&s=10" alt="Биолюминесценция">
+    <div class="img-caption">Биолюминесценция</div>
+  </div>
+  <span class="num">8 / 11</span>
 </div>
 
-<!-- СЛАЙД 8 -->
+<!-- ==================== СЛАЙД 9 ==================== -->
 <div class="slide">
+  <div class="depth-scale"></div>
   <div class="text">
-    <div class="line"></div>
     <h2>Кто осмелился спуститься?</h2>
     <ul>
-      <li><span class="accent">1960</span> — батискаф «Триест» (Пикар и Уолш)</li>
-      <li><span class="accent">2012</span> — Джеймс Кэмерон</li>
-      <li><span class="accent">2020</span> — российский «Витязь-Д»</li>
-      <li>За 60+ лет на дне побывало <span class="scary">всего несколько человек</span></li>
+      <li><span class="accent">1960</span> — батискаф «Триест» (Жак Пикар и Дон Уолш)</li>
+      <li><span class="accent">2012</span> — режиссёр Джеймс Кэмерон, в одиночку</li>
+      <li><span class="accent">2020</span> — российский аппарат «Витязь-Д»</li>
+      <li>За 60+ лет на дне побывало <span class="scary">меньше 30 человек</span></li>
     </ul>
+    <div class="fact">
+      <strong>Сравни:</strong> в космосе побывало более 600 человек.
+      На дне Марианской впадины — в 20 раз меньше.
+    </div>
   </div>
-  <div class="img-box"><img src="img/intro.jpg" alt="Батискаф"></div>
-  <span class="num">8 / 10</span>
+  <div class="img-box">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRw0BXXKb6RFwofajSk6GlMyxOfD5OWSS5Dh-ZXjfPGdQ&s=10" alt="Батискаф">
+    <div class="img-caption">Погружение</div>
+  </div>
+  <span class="num">9 / 11</span>
 </div>
 
-<!-- СЛАЙД 9 -->
+<!-- ==================== СЛАЙД 10 ==================== -->
 <div class="slide">
+  <div class="depth-scale"></div>
   <div class="text">
-    <div class="line"></div>
     <h2>Почему это важно?</h2>
     <ul>
-      <li>Там — <span class="accent">уникальные виды</span>, которых нет больше нигде</li>
-      <li>Учёные изучают, как живое выживает при 1100 атм</li>
-      <li>Это помогает в медицине и биотехнологиях</li>
-      <li>Впадина — <span class="scary">ключ к пониманию жизни на других планетах</span></li>
-      <li>Например, под льдом спутника Европы</li>
+      <li>Здесь живут <span class="accent">уникальные виды</span>, которых нет больше нигде</li>
+      <li>Учёные изучают, как жизнь выживает при 1100 атм</li>
+      <li>Это помогает в <span class="accent">медицине и биотехнологиях</span></li>
+      <li>Впадина — ключ к пониманию жизни на других планетах</li>
+      <li>Например, под льдом спутника Юпитера — Европы</li>
     </ul>
+    <div class="fact">
+      <strong>Перспектива:</strong> ферменты глубоководных бактерий
+      уже применяются в ПЦР-тестах и производстве лекарств.
+    </div>
   </div>
-  <div class="img-box"><img src="img/angler.jpg" alt="Жизнь в бездне"></div>
-  <span class="num">9 / 10</span>
+  <div class="img-box">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMBndLlJ7QX1TR9WbOeZfiiD1WVE1jUINsn4DXQ5qoiQ&s=10" alt="Жизнь в бездне">
+    <div class="img-caption">Жизнь при давлении</div>
+  </div>
+  <span class="num">10 / 11</span>
 </div>
 
-<!-- СЛАЙД 10 -->
-<div class="slide">
-  <div class="text">
-    <div class="line"></div>
-    <h2>Жуткие факты</h2>
-    <ul>
-      <li>Впадина изучена <span class="scary">меньше, чем поверхность Марса</span></li>
-      <li>На дне находили пластиковый мусор</li>
-      <li>Учёные до сих пор слышат странные звуки с глубины</li>
-      <li>Каждый спуск — риск не вернуться</li>
-    </ul>
-    <p style="margin-top:38px; color:#ffd60a; font-size:34px; font-weight:700;">Спасибо за внимание 🌊</p>
+<!-- ==================== СЛАЙД 11 — ФИНАЛ ==================== -->
+<div class="slide final-slide">
+  <h2>Жуткие факты на прощание</h2>
+  <ul>
+    <li>Марианская впадина изучена <span class="scary">меньше, чем поверхность Марса</span></li>
+    <li>На дне находили <span class="scary">пластиковый мусор</span> — человек добрался везде</li>
+    <li>Учёные до сих пор слышат <span class="scary">странные звуки</span> с глубины</li>
+    <li>Каждый спуск — это <span class="scary">риск не вернуться</span></li>
+    <li>А что ещё скрывается там — <span class="scary">никто не знает...</span></li>
+  </ul>
+  <p style="margin-top:40px; color:#ffd60a; font-size:36px; font-weight:800; letter-spacing:2px;">
+    Спасибо за внимание 🌊
+  </p>
+  <div class="author">
+    Делал:
+    <strong>Адиль Мейрманов</strong>
   </div>
-  <div class="img-box"><img src="img/deep.jpg" alt="Глубины"></div>
-  <span class="num">10 / 10</span>
+  <span class="num">11 / 11</span>
 </div>
 
 <div class="nav">
