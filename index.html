@@ -1,132 +1,59 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>Марианская впадина — 1998</title>
+<title>Марианская впадина</title>
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; font-family:'Courier New', Courier, monospace; }
-  body { background:#000; color:#e0f7ff; overflow:hidden; position:relative; }
-
-  /* Эффект сканлайнов (CRT / ЭЛТ телевизор 90-х) */
-  body::before {
-    content: " ";
-    display: block;
-    position: absolute;
-    top: 0; left: 0; bottom: 0; right: 0;
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-    z-index: 50;
-    background-size: 100% 4px, 6px 100%;
-    pointer-events: none;
-  }
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Arial, sans-serif; }
+  body { background:#000; color:#e0f7ff; overflow:hidden; }
 
   .slide {
     display:none; width:100vw; height:100vh; padding:55px 85px;
     flex-direction:row; align-items:center; gap:55px;
     position:relative;
-    background: linear-gradient(180deg, #001d3d 0%, #00112b 55%, #000000 100%);
+    background: linear-gradient(180deg,
+      #003049 0%, #001d3d 25%, #00112b 55%, #000814 80%, #000000 100%);
   }
   .slide.active { display:flex; }
 
   .text { flex:1; z-index:2; }
-  h1 { font-size:68px; color:#ffd60a; margin-bottom:20px; letter-spacing:2px; line-height:1.1; text-shadow: 2px 2px #ff0000; }
-  h2 { font-size:46px; color:#00b4d8; margin-bottom:28px; letter-spacing:1px; text-shadow: 2px 2px #000; }
-  p { font-size:24px; line-height:1.6; margin-bottom:14px; }
+  h1 { font-size:72px; color:#ffd60a; margin-bottom:20px; letter-spacing:2px; line-height:1.1; }
+  h2 { font-size:48px; color:#00b4d8; margin-bottom:28px; letter-spacing:1px; }
+  p { font-size:25px; line-height:1.6; margin-bottom:14px; }
   ul { padding-left:0; list-style:none; }
-  li { font-size:25px; line-height:1.7; margin-bottom:13px; padding-left:36px; position:relative; }
-  li::before { content:"•"; color:#00b4d8; font-weight:bold; position:absolute; left:0; font-size:27px; }
-  
+  li { font-size:26px; line-height:1.7; margin-bottom:13px;
+        padding-left:36px; position:relative; }
+  li::before { content:"▸"; color:#00b4d8; font-weight:bold;
+                position:absolute; left:0; font-size:27px; }
   .accent { color:#ffd60a; font-weight:600; }
   .scary  { color:#ff4d6d; font-weight:600; }
-  .big-number { font-size:90px; color:#ffd60a; font-weight:800; letter-spacing:3px; margin:20px 0; }
-  .line { width:120px; height:4px; background:linear-gradient(90deg,#ffd60a,#ff4d6d); margin-bottom:26px; }
+  .big-number { font-size:100px; color:#ffd60a; font-weight:800;
+                letter-spacing:3px; margin:20px 0; }
+  .line { width:120px; height:4px;
+          background:linear-gradient(90deg,#ffd60a,#ff4d6d);
+          margin-bottom:26px; border-radius:2px; }
 
   .img-box { flex: 0 0 40%; display:flex; align-items:center; justify-content:center; }
   .img-box img {
     max-width:100%; max-height:70vh;
-    border-radius:4px;
-    box-shadow: 0 0 30px rgba(0,180,216,0.3);
-    border:2px solid #00b4d8;
+    border-radius:14px;
+    box-shadow: 0 0 40px rgba(0,180,216,0.5), 0 0 80px rgba(0,0,0,0.9);
+    border:1px solid rgba(0,180,216,0.35);
     object-fit:cover;
-    filter: sepia(0.2) contrast(1.2);
   }
 
-  .num { position:absolute; bottom:28px; right:50px; font-size:20px; color:#4a6b82; letter-spacing:2px; }
+  .num { position:absolute; bottom:28px; right:50px;
+         font-size:20px; color:#4a6b82; letter-spacing:2px; }
 
-  .nav { position:fixed; bottom:22px; left:50%; transform:translateX(-50%); display:flex; gap:20px; z-index:100; }
-  .nav button { background:#0077b6; color:#fff; border:1px solid #fff; padding:12px 30px; font-size:18px; cursor:pointer; font-weight:600; }
+  .nav { position:fixed; bottom:22px; left:50%; transform:translateX(-50%);
+         display:flex; gap:20px; z-index:100; }
+  .nav button { background:#0077b6; color:#fff; border:none;
+                padding:13px 34px; font-size:18px; border-radius:8px;
+                cursor:pointer; font-weight:600; letter-spacing:1px; }
   .nav button:hover { background:#00b4d8; }
-
-  /* Плашка VHS 90-х */
-  .vhs-tag { position:absolute; top:20px; left:20px; color:#00ff00; font-size:20px; font-weight:bold; text-shadow: 1px 1px #000; z-index:60; }
-
-  /* Глитч и сбой */
-  body.corrupted {
-    animation: vhsDistort 0.12s infinite alternate;
-  }
-
-  .slide.corrupted-slide {
-    animation: waveEffect 0.2s infinite alternate, colorBleed 0.15s infinite;
-    filter: invert(0.2) contrast(300%) hue-rotate(180deg);
-  }
-
-  .slide.corrupted-slide h2 {
-    color: #ff0000 !important;
-    text-shadow: 5px 0 0 #00ffff, -5px 0 0 #ff0000;
-    animation: textJitter 0.08s infinite;
-  }
-
-  .slide.corrupted-slide img {
-    animation: imgInvert 0.1s infinite;
-    filter: grayscale(100%) contrast(500%);
-  }
-
-  /* CRT TV OFF */
-  #crt-off {
-    position: fixed; top:0; left:0; width:100vw; height:100vh;
-    background: #000; z-index: 9999; display: none;
-    pointer-events: all;
-  }
-
-  #crt-off.active {
-    display: block;
-    animation: crtShutDown 0.6s forwards;
-  }
-
-  @keyframes vhsDistort {
-    0% { transform: translate(3px, 0) skewX(0deg); }
-    30% { transform: translate(-4px, 2px) skewX(-4deg); }
-    60% { transform: translate(5px, -1px) skewX(3deg); }
-    100% { transform: translate(-2px, 3px) skewX(-1deg); }
-  }
-[20.09.2026 21:43] Latyykk: @keyframes waveEffect {
-    0% { clip-path: inset(0 0 0 0); }
-    20% { clip-path: inset(10% 0 15% 0); transform: scale(1.02) rotate(-1deg); }
-    50% { clip-path: inset(40% 0 5% 0); transform: scale(0.98) rotate(2deg); }
-    80% { clip-path: inset(5% 0 60% 0); transform: scale(1.05) skewY(2deg); }
-    100% { clip-path: inset(0 0 0 0); }
-  }
-
-  @keyframes textJitter {
-    0% { transform: translate(2px, -2px); }
-    100% { transform: translate(-3px, 3px); }
-  }
-
-  @keyframes imgInvert {
-    0% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.1; transform: scale(1.2) skewX(20deg); }
-    100% { opacity: 0.8; transform: scale(0.9); }
-  }
-
-  @keyframes crtShutDown {
-    0% { transform: scale(1, 1); filter: brightness(2); }
-    50% { transform: scale(1, 0.005); filter: brightness(5); }
-    100% { transform: scale(0, 0); filter: brightness(0); }
-  }
 </style>
 </head>
 <body>
-
-<div class="vhs-tag">ПЛЕЙ 📼 15.01.1998 [ЗИМА]</div>
 
 <!-- СЛАЙД 1 -->
 <div class="slide active">
@@ -219,7 +146,8 @@
   <div class="img-box"><img src="img/angler.jpg" alt="Удильщик"></div>
   <span class="num">6 / 10</span>
 </div>
-[20.09.2026 21:43] Latyykk: <!-- СЛАЙД 7 -->
+
+<!-- СЛАЙД 7 -->
 <div class="slide">
   <div class="text">
     <div class="line"></div>
@@ -269,25 +197,22 @@
   <span class="num">9 / 10</span>
 </div>
 
-<!-- СЛАЙД 10 — ФИНАЛ С ЭФФЕКТАМИ DOBROTA.EXE -->
-<div class="slide" id="last-slide">
+<!-- СЛАЙД 10 -->
+<div class="slide">
   <div class="text">
     <div class="line"></div>
-    <h2 id="glitch-title">ОШИБКА ЧТЕНИЯ ДИСКА</h2>
-    <ul id="glitch-list">
-      <li>СЕКТОР 0x000000 FAILED</li>
-      <li>НЕОПОЗНАННАЯ УГРОЗА С ГЛУБИНЫ...</li>
-      <li>СВЯЗЬ ПОТЕРЯНА. ТЕМПЕРАТУРА -25°C</li>
-      <li>СИСТЕМА ЗАБЛОКИРОВАНА</li>
+    <h2>Жуткие факты</h2>
+    <ul>
+      <li>Впадина изучена <span class="scary">меньше, чем поверхность Марса</span></li>
+      <li>На дне находили пластиковый мусор</li>
+      <li>Учёные до сих пор слышат странные звуки с глубины</li>
+      <li>Каждый спуск — риск не вернуться</li>
     </ul>
-    <p id="glitch-footer" style="margin-top:38px; color:#ff0000; font-size:30px; font-weight:700; animation: textJitter 0.05s infinite;">НЕ СМОТРИ В БЕЗДНУ</p>
+    <p style="margin-top:38px; color:#ffd60a; font-size:34px; font-weight:700;">Спасибо за внимание 🌊</p>
   </div>
   <div class="img-box"><img src="img/deep.jpg" alt="Глубины"></div>
   <span class="num">10 / 10</span>
 </div>
-
-<!-- ОВЕРЛЕЙ ВЫКЛЮЧЕНИЯ ЭКРАНА -->
-<div id="crt-off"></div>
 
 <div class="nav">
   <button onclick="prev()">← Назад</button>
@@ -297,150 +222,16 @@
 <script>
   let cur = 0;
   const slides = document.querySelectorAll('.slide');
-  const body = document.body;
-  const lastSlide = document.getElementById('last-slide');
-  const crtOverlay = document.getElementById('crt-off');
 
-  let audioCtx = null;
-  let locked = false;
-  let droneOsc = null;
-  let noiseSrc = null;
-  let screamTimer = null;
-
-  function initAudio() {
-    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  }
-
-  // ====== ГУЛ + ШУМ + СКРЕЖЕТ ======
-  function startHorror() {
-    initAudio();
-    if (!audioCtx) return;
-
-    // 1. Низкий гул
-    droneOsc = audioCtx.createOscillator();
-    const droneGain = audioCtx.createGain();
-    droneOsc.type = 'sawtooth';
-    droneOsc.frequency.setValueAtTime(40, audioCtx.currentTime);
-    droneOsc.frequency.linearRampToValueAtTime(20, audioCtx.currentTime + 30);
-    droneGain.gain.setValueAtTime(0.25, audioCtx.currentTime);
-    droneOsc.connect(droneGain);
-    droneGain.connect(audioCtx.destination);
-    droneOsc.start();
-
-    // 2. Белый шум (VHS-помехи)
-    const bufSize = audioCtx.sampleRate * 30;
-    const buffer = audioCtx.createBuffer(1, bufSize, audioCtx.sampleRate);
-[20.09.2026 21:43] Latyykk: const data = buffer.getChannelData(0);
-    for (let i = 0; i < bufSize; i++) data[i] = (Math.random() * 2 - 1) * 0.15;
-    noiseSrc = audioCtx.createBufferSource();
-    noiseSrc.buffer = buffer;
-    noiseSrc.loop = true;
-    const noiseGain = audioCtx.createGain();
-    noiseGain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-    noiseSrc.connect(noiseGain);
-    noiseGain.connect(audioCtx.destination);
-    noiseSrc.start();
-
-    // 3. Скрежет каждые 3–7 сек
-    function scheduleScreech() {
-      if (!locked) return;
-      const osc = audioCtx.createOscillator();
-      const g = audioCtx.createGain();
-      osc.type = 'square';
-      osc.frequency.setValueAtTime(800 + Math.random() * 1200, audioCtx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(60, audioCtx.currentTime + 0.8);
-      g.gain.setValueAtTime(0.18, audioCtx.currentTime);
-      g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.9);
-      osc.connect(g);
-      g.connect(audioCtx.destination);
-      osc.start();
-      osc.stop(audioCtx.currentTime + 1);
-      screamTimer = setTimeout(scheduleScreech, 3000 + Math.random() * 4000);
-    }
-    screamTimer = setTimeout(scheduleScreech, 2000);
-  }
-
-  function stopHorror() {
-    locked = false;
-    try { if (droneOsc) { droneOsc.stop(); droneOsc = null; } } catch(e) {}
-    try { if (noiseSrc) { noiseSrc.stop(); noiseSrc = null; } } catch(e) {}
-    if (screamTimer) { clearTimeout(screamTimer); screamTimer = null; }
-  }
-
-  // ====== БЛОКИРОВКА ВЫХОДА ======
-  function lockExit() {
-    locked = true;
-
-    window.addEventListener('beforeunload', blockClose, { capture: true });
-
-    history.pushState(null, null, location.href);
-    window.addEventListener('popstate', blockBack);
-    document.addEventListener('keydown', blockKeys, { capture: true });
-
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    document.addEventListener('keydown', e => {
-      if (e.key === 'F12') e.preventDefault();
-      if (e.ctrlKey && e.shiftKey && (e.key === 'I'  e.key === 'J'  e.key === 'C')) e.preventDefault();
-    }, { capture: true });
-  }
-
-  function unlockExit() {
-    locked = false;
-    window.removeEventListener('beforeunload', blockClose, { capture: true });
-    window.removeEventListener('popstate', blockBack);
-    document.removeEventListener('keydown', blockKeys, { capture: true });
-  }
-
-  function blockClose(e) {
-    if (!locked) return;
-    e.preventDefault();
-    e.returnValue = 'НЕ СМОТРИ В БЕЗДНУ';
-    return 'НЕ СМОТРИ В БЕЗДНУ';
-  }
-
-  function blockBack(e) {
-    if (!locked) return;
-    history.pushState(null, null, location.href);
-  }
-
-  function blockKeys(e) {
-    if (!locked) return;
-    if (e.key === 'F5') { e.preventDefault(); return false; }
-    if (e.ctrlKey && (e.key === 'r'  e.key === 'R'  e.key === 'w' || e.key === 'W')) { e.preventDefault(); return false; }
-    if (e.altKey && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) { e.preventDefault(); return false; }
-    if (e.key === 'Backspace' && e.target === document.body) { e.preventDefault(); return false; }
-  }
-
-  // ====== ПОКАЗ СЛАЙДОВ ======
   function show(i){
     slides[cur].classList.remove('active');
     cur = (i + slides.length) % slides.length;
     slides[cur].classList.add('active');
-
-    if (cur === slides.length - 1) {
-      body.classList.add('corrupted');
-      lastSlide.classList.add('corrupted-slide');
-      lockExit();
-      startHorror();
-
-      setTimeout(() => {
-        crtOverlay.classList.add('active');
-      }, 3500);
-    } else {
-      body.classList.remove('corrupted');
-      lastSlide.classList.remove('corrupted-slide');
-      crtOverlay.classList.remove('active');
-      unlockExit();
-      stopHorror();
-    }
   }
-
-  function next(){ initAudio(); show(cur + 1); }
-  function prev(){ initAudio(); show(cur - 1); }
+  function next(){ show(cur + 1); }
+  function prev(){ show(cur - 1); }
 
   document.addEventListener('keydown', e => {
-    if (locked) return;
-    initAudio();
     if(e.key === 'ArrowRight' || e.key === ' ') next();
     if(e.key === 'ArrowLeft') prev();
   });
