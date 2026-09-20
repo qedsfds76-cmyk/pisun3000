@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Марианская впадина</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Arial, sans-serif; }
+  body { background:#000; color:#e0f7ff; overflow:hidden; }
+
+  .slide {
+    display:none; width:100vw; height:100vh; padding:55px 85px;
+    flex-direction:row; align-items:center; gap:55px;
+    position:relative;
+    background: linear-gradient(180deg,
+      #003049 0%, #001d3d 25%, #00112b 55%, #000814 80%, #000000 100%);
+  }
+  .slide.active { display:flex; }
+
+  .text { flex:1; z-index:2; }
+
+  h1 { font-size:72px; color:#ffd60a; margin-bottom:20px; letter-spacing:2px; line-height:1.1; }
+  h2 { font-size:48px; color:#00b4d8; margin-bottom:28px; letter-spacing:1px; }
+
+  p { font-size:25px; line-height:1.6; margin-bottom:14px; }
+  ul { padding-left:0; list-style:none; }
+  li {
+    font-size:26px; line-height:1.7; margin-bottom:13px;
+    padding-left:36px; position:relative;
+  }
+  li::before {
+    content:"▸"; color:#00b4d8; font-weight:bold;
+    position:absolute; left:0; font-size:27px;
+  }
+
+  .accent { color:#ffd60a; font-weight:600; }
+  .scary  { color:#ff4d6d; font-weight:600; }
+
+  .big-number {
+    font-size:100px; color:#ffd60a; font-weight:800;
+    letter-spacing:3px; margin:20px 0;
+  }
+
+  .line {
+    width:120px; height:4px;
+    background:linear-gradient(90deg,#ffd60a,#ff4d6d);
+    margin-bottom:26px; border-radius:2px;
+  }
+
+  .img-box {
+    flex: 0 0 40%;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .img-box img {
+    max-width:100%; max-height:70vh;
+    border-radius:14px;
+    box-shadow: 0 0 40px rgba(0,180,216,0.5), 0 0 80px rgba(0,0,0,0.9);
+    border:1px solid rgba(0,180,216,0.35);
+    object-fit:cover;
+  }
+
+  .num {
+    position:absolute; bottom:28px; right:50px;
+    font-size:20px; color:#4a6b82; letter-spacing:2px;
+  }
+
+  .nav {
+    position:fixed; bottom:22px; left:50%; transform:translateX(-50%);
+    display:flex; gap:20px; z-index:100;
+  }
+  .nav button {
+    background:#0077b6; color:#fff; border:none;
+    padding:13px 34px; font-size:18px; border-radius:8px;
+    cursor:pointer; font-weight:600; letter-spacing:1px;
+  }
+  .nav button:hover { background:#00b4d8; }
+</style>
+</head>
+<body>
+
+<!-- СЛАЙД 1 -->
+<div class="slide active">
+  <div class="text">
+    <div class="line"></div>
+    <h1>МАРИАНСКАЯ<br>ВПАДИНА</h1>
+    <p style="font-size:30px; color:#00b4d8;">Что скрывается на глубине 11 км?</p>
+    <p style="margin-top:50px; font-size:20px; color:#4a6b82;">География • 8 класс</p>
+  </div>
+  <div class="img-box">
+    <img src="https://habrastorage.org/getpro/geektimes/post_images/66b/453/1b9/66b4531b92155bb0212c05bdc5d64275.jpg" alt="Марианская впадина">
+  </div>
+  <span class="num">1 / 10</span>
+</div>
+
+<!-- СЛАЙД 2 -->
+<div class="slide">
+  <div class="text">
+    <div class="line"></div>
+    <h2>Где она прячется?</h2>
+    <ul>
+      <li>Западная часть Тихого океана</li>
+      <li>Рядом с <span class="accent">Марианскими островами</span></li>
+      <li>Длина — более <span class="accent">2 500 км</span></li>
+      <li>Ширина — около 69 км</li>
+      <li>Самое глубокое место на Земле</li>
+    </ul>
+  </div>
+  <div class="img-box">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrISoUlqjKarQmnRzl4ifxp3V3-C4NcoYvIyNCI5Dm_A&s=10" alt="Карта впадины">
+  </div>
+  <span class="num">2 / 10</span>
+</div>
+
+<!-- СЛАЙД 3 -->
+<div class="slide">
+  <div class="text">
+    <div class="line"></div>
+    <h2>Бездна Челленджера</h2>
+    <p>Самая глубокая точка планеты:</p>
+    <div class="big-number">10 994 м</div>
+    <p>Эверест (8 848 м) утонул бы здесь — <span class="scary">над ним осталось бы ещё 2 км воды</span>.</p>
+  </div>
+  <div class="img-box">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTywCx8G-pmfm9du5259je3hOI7VERx-GsMExb8qsXeEQ&s=10" alt="Глубины впадины">
+  </div>
+  <span class="num">3 / 10</span>
+</div>
+
+<!-- СЛАЙД 4 (НОВЫЙ) -->
+<div class="slide">
+  <div class="text">
+    <div class="line"></div>
+    <h2>Как она образовалась?</h2>
+    <ul>
+      <li>Здесь одна <span class="accent">литосферная плита</span> уходит под другую</li>
+      <li>Это называется <span class="accent">субдукция</span></li>
+      <li>Тихоокеанская плита «ныряет» под Марианскую</li>
+      <li>Процесс идёт миллионы лет</li>
+      <li>Поэтому тут — <span class="scary">самые глубокие желоба Земли</span></li>
+    </ul>
+  </div>
+  <div class="img-box">
+    <img src="https://cs15.pikabu.ru/post_img/big/2024/10/14/9/172891843522046622.jpg" alt="Субдукция плит">
+  </div>
+  <span class="num">4 / 10</span>
+</div>
+
+<!-- СЛАЙД 5 -->
+<div class="slide">
+  <div class="text">
+    <div class="line"></div>
+    <h2>Условия на дне</h2>
+    <ul>
+      <li>Температура: <span class="accent">+1…+4 °C</span></li>
+      <li><span class="scary">Абсолютная темнота</span> — свет не доходит</li>
+      <li>Давление: <span class="scary">~1100 атмосфер</span></li>
+      <li>Еды почти нет — но жизнь существует</li>
+    </ul>
+  </div>
+  <div class="img-box">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrISoUlqjKarQmnRzl4ifxp3V3-C4NcoYvIyNCI5Dm_A&s=10" alt="Марианская впадина">
+  </div>
+  <span class="num">5 / 10</span>
+</div>
+
+<!-- СЛАЙД 6 -->
+<div class="slide">
+  <div class="text">
+    <div class="line"></div>
+    <h2>Кто живёт в бездне?</h2>
+    <ul>
+      <li><span class="scary">Гигантский кальмар</span> — до 13 метров</li>
+      <li>Рыбы-удильщики со светящимися зубами</li>
+      <li>Бактерии-экстремофилы</li>
+      <li>Слепые черви и ракообразные</li>
+      <li>Существа, которых мы ещё не нашли</li>
+    </ul>
+  </div>
+  <div class="img-box">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_1wraUPEb3poOmYD-nj9E4UO4kbigqDmLZiOMcGhc7A&s=10" alt="Глубоководный удильщик">
+  </div>
+  <span class="num">6 / 10</span>
+</div>
+
+<!-- СЛАЙД 7 (НОВЫЙ) -->
+<div class="slide">
+  <div class="text">
+    <div class="line"></div>
+    <h2>Светящиеся существа</h2>
+    <ul>
+      <li>На глубине многие животные <span class="accent">светятся</span></li>
+      <li>Это называется <span class="accent">биолюминесценция</span></li>
+      <li>Свет помогает <span class="scary">приманивать добычу</span></li>
+      <li>Также — отпугивать врагов и находить пару</li>
+      <li>Удильщик — самый известный «фонарик» океана</li>
+    </ul>
+  </div>
+  <div class="img-box">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCzFYt-78Z4FOyIWinqLzxQOeVYKEIVCQggj7Uieia9hKypfdq2ZetRaGx&s=10" alt="Биолюминесценция">
+  </div>
+  <span class="num">7 / 10</span>
+</div>
+
+<!-- СЛАЙД 8 -->
+<div class="slide">
+  <div class="text">
+    <div class="line"></div>
+    <h2>Кто осмелился спуститься?</h2>
+    <ul>
+      <li><span class="accent">1960</span> — батискаф «Триест» (Пикар и Уолш)</li>
+      <li><span class="accent">2012</span> — Джеймс Кэмерон</li>
+      <li><span class="accent">2020</span> — российский «Витязь-Д»</li>
+      <li>За 60+ лет на дне побывало <span class="scary">всего несколько человек</span></li>
+    </ul>
+  </div>
+  <div class="img-box">
+    <img src="https://habrastorage.org/getpro/geektimes/post_images/66b/453/1b9/66b4531b92155bb0212c05bdc5d64275.jpg" alt="Батискаф">
+  </div>
+  <span class="num">8 / 10</span>
+</div>
+
+<!-- СЛАЙД 9 (НОВЫЙ) -->
+<div class="slide">
+  <div class="text">
+    <div class="line"></div>
+    <h2>Почему это важно?</h2>
+    <ul>
+      <li>Там — <span class="accent">уникальные виды</span>, которых нет больше нигде</li>
+      <li>Учёные изучают, как живое выживает при 1100 атм</li>
+      <li>Это помогает в медицине и биотехнологиях</li>
+      <li>Впадина — <span class="scary">ключ к пониманию жизни на других планетах</span></li>
+      <li>Например, под льдом спутника Европы</li>
+    </ul>
+  </div>
+  <div class="img-box">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_1wraUPEb3poOmYD-nj9E4UO4kbigqDmLZiOMcGhc7A&s=10" alt="Жизнь в бездне">
+  </div>
+  <span class="num">9 / 10</span>
+</div>
+
+<!-- СЛАЙД 10 -->
+<div class="slide">
+  <div class="text">
+    <div class="line"></div>
+    <h2>Жуткие факты</h2>
+    <ul>
+      <li>Впадина изучена <span class="scary">меньше, чем поверхность Марса</span></li>
+      <li>На дне находили пластиковый мусор</li>
+      <li>Учёные до сих пор слышат странные звуки с глубины</li>
+      <li>Каждый спуск — риск не вернуться</li>
+    </ul>
+    <p style="margin-top:38px; color:#ffd60a; font-size:34px; font-weight:700;">Спасибо за внимание 🌊</p>
+  </div>
+  <div class="img-box">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTywCx8G-pmfm9du5259je3hOI7VERx-GsMExb8qsXeEQ&s=10" alt="Глубины">
+  </div>
+  <span class="num">10 / 10</span>
+</div>
+
+<div class="nav">
+  <button onclick="prev()">← Назад</button>
+  <button onclick="next()">Вперёд →</button>
+</div>
+
+<script>
+  let cur = 0;
+  const slides = document.querySelectorAll('.slide');
+  function show(i){
+    slides[cur].classList.remove('active');
+    cur = (i + slides.length) % slides.length;
+    slides[cur].classList.add('active');
+  }
+  function next(){ show(cur + 1); }
+  function prev(){ show(cur - 1); }
+  document.addEventListener('keydown', e => {
+    if(e.key === 'ArrowRight' || e.key === ' ') next();
+    if(e.key === 'ArrowLeft') prev();
+  });
+</script>
+
+</body>
+</html>
