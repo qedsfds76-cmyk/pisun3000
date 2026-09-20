@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
@@ -33,7 +33,7 @@
   p { font-size:24px; line-height:1.6; margin-bottom:14px; }
   ul { padding-left:0; list-style:none; }
   li { font-size:25px; line-height:1.7; margin-bottom:13px; padding-left:36px; position:relative; }
-  li::before { content:"▸"; color:#00b4d8; font-weight:bold; position:absolute; left:0; font-size:27px; }
+  li::before { content:"•"; color:#00b4d8; font-weight:bold; position:absolute; left:0; font-size:27px; }
   
   .accent { color:#ffd60a; font-weight:600; }
   .scary  { color:#ff4d6d; font-weight:600; }
@@ -56,10 +56,10 @@
   .nav button { background:#0077b6; color:#fff; border:1px solid #fff; padding:12px 30px; font-size:18px; cursor:pointer; font-weight:600; }
   .nav button:hover { background:#00b4d8; }
 
-  /* ТЕКСТОВАЯ ПЛАШКА ВАЙБА 90-Х (ЗИМА/ВХС) */
+  /* Плашка VHS 90-х */
   .vhs-tag { position:absolute; top:20px; left:20px; color:#00ff00; font-size:20px; font-weight:bold; text-shadow: 1px 1px #000; z-index:60; }
 
-  /* ЭФФЕКТЫ ГЛИТЧА И СБОЯ НА ПОСЛЕДНЕМ СЛАЙДЕ */
+  /* Глитч и сбой */
   body.corrupted {
     animation: vhsDistort 0.12s infinite alternate;
   }
@@ -80,7 +80,7 @@
     filter: grayscale(100%) contrast(500%);
   }
 
-  /* ЭФФЕКТ ВЫКЛЮЧЕНИЯ ЭКРАНА (CRT TV OFF) */
+  /* CRT TV OFF */
   #crt-off {
     position: fixed; top:0; left:0; width:100vw; height:100vh;
     background: #000; z-index: 9999; display: none;
@@ -98,8 +98,7 @@
     60% { transform: translate(5px, -1px) skewX(3deg); }
     100% { transform: translate(-2px, 3px) skewX(-1deg); }
   }
-
-  @keyframes waveEffect {
+[20.09.2026 21:43] Latyykk: @keyframes waveEffect {
     0% { clip-path: inset(0 0 0 0); }
     20% { clip-path: inset(10% 0 15% 0); transform: scale(1.02) rotate(-1deg); }
     50% { clip-path: inset(40% 0 5% 0); transform: scale(0.98) rotate(2deg); }
@@ -127,7 +126,7 @@
 </head>
 <body>
 
-<div class="vhs-tag">ПЛАЙ 📼 15.01.1998 [ЗИМА]</div>
+<div class="vhs-tag">ПЛЕЙ 📼 15.01.1998 [ЗИМА]</div>
 
 <!-- СЛАЙД 1 -->
 <div class="slide active">
@@ -220,8 +219,7 @@
   <div class="img-box"><img src="img/angler.jpg" alt="Удильщик"></div>
   <span class="num">6 / 10</span>
 </div>
-
-<!-- СЛАЙД 7 -->
+[20.09.2026 21:43] Latyykk: <!-- СЛАЙД 7 -->
 <div class="slide">
   <div class="text">
     <div class="line"></div>
@@ -271,7 +269,7 @@
   <span class="num">9 / 10</span>
 </div>
 
-<!-- СЛАЙД 10 (ФИНАЛЬНЫЙ АПОКАЛИПСИС) -->
+<!-- СЛАЙД 10 — ФИНАЛ С ЭФФЕКТАМИ DOBROTA.EXE -->
 <div class="slide" id="last-slide">
   <div class="text">
     <div class="line"></div>
@@ -282,7 +280,7 @@
       <li>СВЯЗЬ ПОТЕРЯНА. ТЕМПЕРАТУРА -25°C</li>
       <li>СИСТЕМА ЗАБЛОКИРОВАНА</li>
     </ul>
-    <p id="glitch-footer" style="margin-top:38px; color:#ff0000; font-size:30px; font-weight:700;">НЕ СМОТРИ В БЕЗДНУ</p>
+    <p id="glitch-footer" style="margin-top:38px; color:#ff0000; font-size:30px; font-weight:700; animation: textJitter 0.05s infinite;">НЕ СМОТРИ В БЕЗДНУ</p>
   </div>
   <div class="img-box"><img src="img/deep.jpg" alt="Глубины"></div>
   <span class="num">10 / 10</span>
@@ -304,73 +302,136 @@
   const crtOverlay = document.getElementById('crt-off');
 
   let audioCtx = null;
+  let locked = false;
+  let droneOsc = null;
+  let noiseSrc = null;
+  let screamTimer = null;
 
   function initAudio() {
-    if (!audioCtx) {
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    }
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   }
 
-  // Генератор жуткого аналогового шума 90-х
-  function playCreepySpookySound() {
+  // ====== ГУЛ + ШУМ + СКРЕЖЕТ ======
+  function startHorror() {
     initAudio();
     if (!audioCtx) return;
 
-    // Низкочастотный гул (дрожание)
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(55, audioCtx.currentTime); // Низкий нота A
-    osc.frequency.exponentialRampToValueAtTime(30, audioCtx.currentTime + 4);
+    // 1. Низкий гул
+    droneOsc = audioCtx.createOscillator();
+    const droneGain = audioCtx.createGain();
+    droneOsc.type = 'sawtooth';
+    droneOsc.frequency.setValueAtTime(40, audioCtx.currentTime);
+    droneOsc.frequency.linearRampToValueAtTime(20, audioCtx.currentTime + 30);
+    droneGain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+    droneOsc.connect(droneGain);
+    droneGain.connect(audioCtx.destination);
+    droneOsc.start();
 
-    gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 5);
-
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.start();
-    osc.stop(audioCtx.currentTime + 5);
-
-    // Белый шум (помехи пленки VHS)
-    const bufferSize = audioCtx.sampleRate * 5;
-    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-    const data = buffer.getChannelData(0);
-    for (let i = 0; i < bufferSize; i++) {
-      data[i] = Math.random() * 2 - 1;
-    }
-
-    const noise = audioCtx.createBufferSource();
-    noise.buffer = buffer;
+    // 2. Белый шум (VHS-помехи)
+    const bufSize = audioCtx.sampleRate * 30;
+    const buffer = audioCtx.createBuffer(1, bufSize, audioCtx.sampleRate);
+[20.09.2026 21:43] Latyykk: const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufSize; i++) data[i] = (Math.random() * 2 - 1) * 0.15;
+    noiseSrc = audioCtx.createBufferSource();
+    noiseSrc.buffer = buffer;
+    noiseSrc.loop = true;
     const noiseGain = audioCtx.createGain();
-    noiseGain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-    noiseGain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 5);
-
-    noise.connect(noiseGain);
+    noiseGain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+    noiseSrc.connect(noiseGain);
     noiseGain.connect(audioCtx.destination);
-    noise.start();
+    noiseSrc.start();
+
+    // 3. Скрежет каждые 3–7 сек
+    function scheduleScreech() {
+      if (!locked) return;
+      const osc = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(800 + Math.random() * 1200, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(60, audioCtx.currentTime + 0.8);
+      g.gain.setValueAtTime(0.18, audioCtx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.9);
+      osc.connect(g);
+      g.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 1);
+      screamTimer = setTimeout(scheduleScreech, 3000 + Math.random() * 4000);
+    }
+    screamTimer = setTimeout(scheduleScreech, 2000);
   }
 
+  function stopHorror() {
+    locked = false;
+    try { if (droneOsc) { droneOsc.stop(); droneOsc = null; } } catch(e) {}
+    try { if (noiseSrc) { noiseSrc.stop(); noiseSrc = null; } } catch(e) {}
+    if (screamTimer) { clearTimeout(screamTimer); screamTimer = null; }
+  }
+
+  // ====== БЛОКИРОВКА ВЫХОДА ======
+  function lockExit() {
+    locked = true;
+
+    window.addEventListener('beforeunload', blockClose, { capture: true });
+
+    history.pushState(null, null, location.href);
+    window.addEventListener('popstate', blockBack);
+    document.addEventListener('keydown', blockKeys, { capture: true });
+
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', e => {
+      if (e.key === 'F12') e.preventDefault();
+      if (e.ctrlKey && e.shiftKey && (e.key === 'I'  e.key === 'J'  e.key === 'C')) e.preventDefault();
+    }, { capture: true });
+  }
+
+  function unlockExit() {
+    locked = false;
+    window.removeEventListener('beforeunload', blockClose, { capture: true });
+    window.removeEventListener('popstate', blockBack);
+    document.removeEventListener('keydown', blockKeys, { capture: true });
+  }
+
+  function blockClose(e) {
+    if (!locked) return;
+    e.preventDefault();
+    e.returnValue = 'НЕ СМОТРИ В БЕЗДНУ';
+    return 'НЕ СМОТРИ В БЕЗДНУ';
+  }
+
+  function blockBack(e) {
+    if (!locked) return;
+    history.pushState(null, null, location.href);
+  }
+
+  function blockKeys(e) {
+    if (!locked) return;
+    if (e.key === 'F5') { e.preventDefault(); return false; }
+    if (e.ctrlKey && (e.key === 'r'  e.key === 'R'  e.key === 'w' || e.key === 'W')) { e.preventDefault(); return false; }
+    if (e.altKey && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) { e.preventDefault(); return false; }
+    if (e.key === 'Backspace' && e.target === document.body) { e.preventDefault(); return false; }
+  }
+
+  // ====== ПОКАЗ СЛАЙДОВ ======
   function show(i){
     slides[cur].classList.remove('active');
     cur = (i + slides.length) % slides.length;
     slides[cur].classList.add('active');
 
-    // Режим катастрофы на 10-м слайде
     if (cur === slides.length - 1) {
       body.classList.add('corrupted');
       lastSlide.classList.add('corrupted-slide');
-      
-      playCreepySpookySound();
-      
-      // Таймер до полного отключения ПК (3.5 секунды сбоя -> чёрный экран)
+      lockExit();
+      startHorror();
+
       setTimeout(() => {
         crtOverlay.classList.add('active');
       }, 3500);
-
     } else {
       body.classList.remove('corrupted');
       lastSlide.classList.remove('corrupted-slide');
       crtOverlay.classList.remove('active');
+      unlockExit();
+      stopHorror();
     }
   }
 
@@ -378,6 +439,7 @@
   function prev(){ initAudio(); show(cur - 1); }
 
   document.addEventListener('keydown', e => {
+    if (locked) return;
     initAudio();
     if(e.key === 'ArrowRight' || e.key === ' ') next();
     if(e.key === 'ArrowLeft') prev();
